@@ -1,12 +1,19 @@
 package com.example.demo.controller
 
+import com.example.demo.HandlerMapping
 import com.example.demo.UserDetailsServiceImpl
+import com.example.demo.config.security.JwtAuth
 import com.example.demo.provider.Data
-import org.apache.catalina.core.ApplicationContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
+import org.springframework.stereotype.Component
+
 
 @RestController
 
@@ -16,14 +23,15 @@ class HtmlController {
 
     @GetMapping("/")
     fun index(): Any {
-        return "index"
+        val beansWithAnnotation = DefaultListableBeanFactory().getBeansWithAnnotation(Controller::class.java)
+
+
+        return beansWithAnnotation
 
     }
 
     @GetMapping("/ok")
     fun take(): Any {
-//        var principal = SecurityContextHolder.getContext().authentication.principal
-//        println(principal)
         return "ok"
     }
 
@@ -31,12 +39,15 @@ class HtmlController {
     fun auth(): Any {
         return "no auth"
     }
-    @PreAuthorize("hasAuthority('JWT_AUTH')")
+
+
+    @JwtAuth
     @GetMapping("/ctn")
     fun content(): Any {
-        return "content"
+
+        return HandlerMapping.urls
     }
-    @PreAuthorize("JWT_AUTH")
+
     @GetMapping("/principal")
     fun principal(): Any {
         return SecurityContextHolder.getContext()
@@ -57,12 +68,48 @@ class HtmlController {
         userDetailsService.saveUser(user["username"]!!, user["password"]!!)
         return userDetailsService.getUserData()
     }
+
     @PostMapping("/login")
-    fun login(): Any{
-        return userDetailsService.getUserData()
+    fun login(): Any? {
+//        return SecurityContextHolder.getContext()
+        var res = displayAllBeans()
+        System.err.println("????")
+        System.err.println(res)
+        return res
+
     }
+
+    fun findTarget() {
+
+    }
+
+    @Autowired
+    lateinit var applicationContext: ApplicationContext
+
+    fun displayAllBeans() {
+        val controllerBeans = applicationContext!!.getBeansWithAnnotation(RestController::class.java)
+        for (bean in controllerBeans) {
+            println(bean::class.java.name)
+        }
+    }
+
     @GetMapping("/user/info")
     fun userInfo(): Any {
         return userDetailsService.getUserData()
     }
+
+    @Autowired
+    lateinit var ctx: ApplicationContextProvider
+
+
+}
+
+@Component
+class ApplicationContextProvider : ApplicationContextAware {
+
+    override fun setApplicationContext(p0: org.springframework.context.ApplicationContext) {
+        this.context = p0
+    }
+
+    var context: ApplicationContext? = null
 }

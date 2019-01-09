@@ -1,5 +1,6 @@
 package com.example.demo
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -19,10 +20,16 @@ class UserDetailsServiceImpl : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         val password = userData[username]
                 ?: throw UsernameNotFoundException(username)
-        return User(username, BCryptPasswordEncoder().encode(password), emptyList())
+        return User(
+                username,
+                BCryptPasswordEncoder().encode(password),
+                mutableListOf(SimpleGrantedAuthority("JWT_AUTH"))
+        )//, emptyList())
     }
-    fun saveUser(username:String, password:String){
+
+    fun saveUser(username: String, password: String) {
         userData[username] = BCryptPasswordEncoder().encode(password)
     }
+
     fun getUserData() = userData
 }
