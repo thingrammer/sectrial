@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false
+    username: fat
+    password: ps
+#    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    security:
+#      oauth2:
+#        resource:
+#          filter-order: 3
+
+logging:
+  level:
+    org.springframework:
+      security: DEBUG
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri:
+#    user:
+#      name: fat
+#      password: ps
+#    basic:
+#      enabled: true
+
+
+
