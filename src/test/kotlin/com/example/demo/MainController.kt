@@ -1,6 +1,6 @@
 package com.example.demo
 
-import com.example.demo.controller.HtmlController
+import com.example.demo.controller.BaseController
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -18,18 +18,18 @@ class MainControllerTest {
 //    var dataService: DataService = DataImpl()
 
     @InjectMocks
-    lateinit var htmlController: HtmlController
+    lateinit var baseController: BaseController
 
     @Test
     fun testMainController() {
-//        val take = htmlController.take()
-//        val get = htmlController.get()
+//        val take = baseController.take()
+//        val get = baseController.get()
 //        println(take)
 //        println(get)
     }
 }
 //class DataImpl : DataService() {
-//    override fun getData(): Any {
+//    override fun getDemoMapper(): Any {
 //        return "fucks"
 //    }
 //}

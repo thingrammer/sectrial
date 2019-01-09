@@ -1,6 +1,6 @@
 package com.example.demo
 
-import com.example.demo.provider.Data
+import com.example.demo.repository.DemoMapper
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest
@@ -14,10 +14,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 @RunWith(SpringRunner::class)
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CityMapperTest {
+class CityDemoMapperTest {
 
     @Autowired
-    lateinit var map: Data
+    lateinit var map: DemoMapper
 
     @Test
     fun findByStateTest() {

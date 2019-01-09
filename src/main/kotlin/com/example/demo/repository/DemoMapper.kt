@@ -1,11 +1,10 @@
-package com.example.demo.provider
+package com.example.demo.repository
 
-import com.example.demo.Res
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
 
 @Mapper
-interface Data {
+interface DemoMapper {
     @Select("select *  from tt ")
-    fun get(): List<Map<String, Res>>
+    fun get(): List<Map<String, Any>>
 }

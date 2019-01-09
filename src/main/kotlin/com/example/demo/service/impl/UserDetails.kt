@@ -1,6 +1,5 @@
-package com.example.demo
+package com.example.demo.service.impl
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -23,8 +22,9 @@ class UserDetailsServiceImpl : UserDetailsService {
         return User(
                 username,
                 BCryptPasswordEncoder().encode(password),
-                mutableListOf(SimpleGrantedAuthority("JWT_AUTH"))
-        )//, emptyList())
+                emptyList()
+//                mutableListOf(SimpleGrantedAuthority("JWT_AUTH"))
+        )
     }
 
     fun saveUser(username: String, password: String) {
