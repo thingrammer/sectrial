@@ -1,6 +1,6 @@
-package com.example.demo.config.security
+package com.example.auth.jwt.config.security
 
-import com.example.demo.service.impl.UserDetailsServiceImpl
+import com.example.auth.jwt.service.impl.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
