@@ -84,7 +84,7 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
                     .subject
 
             return if (user != null) {
-                UsernamePasswordAuthenticationToken(user, null, ArrayList())
+                UsernamePasswordAuthenticationToken(user, null, emptyList())
             } else null
         }
         return null
