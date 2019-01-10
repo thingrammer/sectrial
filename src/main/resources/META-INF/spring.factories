@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.demo.jwt.config.security.WebSecurity,\
+com.demo.jwt.config.security.JwtInitConfig,\
+  com.demo.jwt.service.impl.UserDetailsServiceAdapter

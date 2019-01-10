@@ -2,6 +2,7 @@ package com.demo.jwt.config.security
 
 import com.demo.jwt.service.impl.UserDetailsServiceAdapter
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -16,7 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
-//@EnableAutoConfiguration
+@AutoConfigureOrder
 @Configuration
 class WebSecurity(private var userDetailsService: UserDetailsServiceAdapter,
                   private var bCryptPasswordEncoder: BCryptPasswordEncoder) : WebSecurityConfigurerAdapter() {

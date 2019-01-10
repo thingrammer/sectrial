@@ -1,11 +1,13 @@
 package com.demo.jwt.config.security
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 
+@AutoConfigureOrder
 @Configuration
 class JwtInitConfig {
     @Bean
