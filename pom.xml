@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>com.example.jwt-auth</artifactId>
+    <version>0.0.1</version>
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
 
@@ -31,16 +31,16 @@
             </exclusions>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>io.jsonwebtoken</groupId>-->
-            <!--<artifactId>jjwt</artifactId>-->
-            <!--<version>0.9.0</version>-->
+        <!--<groupId>io.jsonwebtoken</groupId>-->
+        <!--<artifactId>jjwt</artifactId>-->
+        <!--<version>0.9.0</version>-->
         <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-jwt -->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-jwt</artifactId>-->
-            <!--<version>1.0.9.RELEASE</version>-->
+        <!--<groupId>org.springframework.security</groupId>-->
+        <!--<artifactId>spring-security-jwt</artifactId>-->
+        <!--<version>1.0.9.RELEASE</version>-->
         <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
         <dependency>
