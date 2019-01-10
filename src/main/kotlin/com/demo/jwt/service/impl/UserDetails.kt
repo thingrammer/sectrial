@@ -1,4 +1,4 @@
-package com.example.auth.jwt.service.impl
+package com.demo.jwt.service.impl
 
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class UserDetailsServiceImpl : UserDetailsService {
+class UserDetailsServiceAdapter : UserDetailsService {
     companion object {
         val userData = mutableMapOf(
                 "fat" to "ps"

@@ -1,6 +1,6 @@
-package com.example.auth.jwt.config.security
+package com.demo.jwt.config.security
 
-import com.example.auth.jwt.service.impl.UserDetailsServiceImpl
+import com.demo.jwt.service.impl.UserDetailsServiceAdapter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,14 +16,15 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
+//@EnableAutoConfiguration
 @Configuration
-class WebSecurity(private var userDetailsService: UserDetailsServiceImpl,
+class WebSecurity(private var userDetailsService: UserDetailsServiceAdapter,
                   private var bCryptPasswordEncoder: BCryptPasswordEncoder) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
                 .cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, JwtProperties.SIGN_UP_URL).permitAll()
                 .antMatchers(*UriHandler.uris.toTypedArray()).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -34,7 +35,6 @@ class WebSecurity(private var userDetailsService: UserDetailsServiceImpl,
 
     @Autowired
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
-
         auth.userDetailsService<UserDetailsService>(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
     }
 

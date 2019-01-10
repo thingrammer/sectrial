@@ -1,8 +1,11 @@
-package com.example.auth.jwt.config.security
+package com.demo.jwt.config.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -11,17 +14,24 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.stereotype.Component
 import java.io.IOException
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-const val EXPIRATION_TIME = 1000_000_0000
-const val SECRET = "123124"
-const val HEADER_STRING = "Authorization"
-const val TOKEN_PREFIX = "JWT-"
-const val SIGN_UP_URL = "/sign/up"
+
+@Component
+@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "jwt")
+object JwtProperties {
+    var EXPIRATION_TIME = 1000_000_0000
+    var SECRET = "123124"
+    var HEADER_STRING = "Authorization"
+    var TOKEN_PREFIX = "JWT-"
+    var SIGN_UP_URL = "/sign/up"
+}
 
 data class ApplicationUser(
         var id: Long, // not used
@@ -53,9 +63,9 @@ class JWTAuthenticationFilter(var authManager: AuthenticationManager) : Username
 
         val token = JWT.create()
                 .withSubject((auth.principal as User).username)
-                .withExpiresAt(Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET.toByteArray()))
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token)
+                .withExpiresAt(Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET.toByteArray()))
+        res.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token)
     }
 }
 
@@ -63,9 +73,9 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     override fun doFilterInternal(req: HttpServletRequest,
                                   res: HttpServletResponse,
                                   chain: FilterChain) {
-        val header = req.getHeader(HEADER_STRING)
+        val header = req.getHeader(JwtProperties.HEADER_STRING)
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
             chain.doFilter(req, res)
             return
         }
@@ -75,12 +85,12 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     }
 
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token = request.getHeader(HEADER_STRING)
+        val token = request.getHeader(JwtProperties.HEADER_STRING)
         if (token != null) {
             // parse the token.
-            val user = JWT.require(Algorithm.HMAC512(SECRET.toByteArray()))
+            val user = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET.toByteArray()))
                     .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
+                    .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""))
                     .subject
 
             return if (user != null) {

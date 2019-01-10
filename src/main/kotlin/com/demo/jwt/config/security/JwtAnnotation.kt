@@ -1,4 +1,4 @@
-package com.example.auth.jwt.config.security
+package com.demo.jwt.config.security
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
