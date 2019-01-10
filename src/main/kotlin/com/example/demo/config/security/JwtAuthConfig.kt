@@ -1,6 +1,5 @@
 package com.example.demo.config.security
 
-import com.example.demo.HandlerMapping
 import com.example.demo.service.impl.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -25,7 +24,7 @@ class WebSecurity(private var userDetailsService: UserDetailsServiceImpl,
         http
                 .cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(*HandlerMapping.urls.toTypedArray()).permitAll()
+                .antMatchers(*UriHandler.uris.toTypedArray()).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))

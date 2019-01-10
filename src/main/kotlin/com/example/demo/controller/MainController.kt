@@ -1,7 +1,7 @@
 package com.example.demo.controller
 
-import com.example.demo.HandlerMapping
 import com.example.demo.config.security.JwtAuth
+import com.example.demo.config.security.UriHandler
 import com.example.demo.repository.DemoMapper
 import com.example.demo.service.impl.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +39,7 @@ class BaseController {
     @GetMapping("/ctn")
     fun content(): Any {
 
-        return HandlerMapping.urls
+        return UriHandler.uris
     }
 
     @GetMapping("/principal")
