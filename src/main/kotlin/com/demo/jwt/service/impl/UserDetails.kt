@@ -27,9 +27,8 @@ class UserDetailsServiceAdapter : UserDetailsService {
         )
     }
 
-    fun saveUser(username: String, password: String) {
+    open fun saveUser(username: String, password: String) {
         userData[username] = BCryptPasswordEncoder().encode(password)
     }
 
-    fun getUserData() = userData
 }
