@@ -16,15 +16,19 @@ class UserDetailsServiceAdapter : UserDetailsService {
         )
     }
 
-    override fun loadUserByUsername(username: String): UserDetails {
-        val password = userData[username]
+    final override fun loadUserByUsername(username: String): UserDetails {
+        val password = getPassword(username)
                 ?: throw UsernameNotFoundException(username)
         return User(
                 username,
-                BCryptPasswordEncoder().encode(password),
+                password,
                 emptyList()
 //                mutableListOf(SimpleGrantedAuthority("JWT_AUTH"))
         )
+    }
+
+    open fun getPassword(username: String): String? {
+        return userData[username]
     }
 
     open fun saveUser(username: String, password: String) {
