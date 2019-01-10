@@ -17,14 +17,11 @@ class JwtInitConfig {
     fun handleMapping(handlerMapping: RequestMappingHandlerMapping) {
         var handlers = handlerMapping
         var methods = handlers.handlerMethods
-        for (m in methods) {
-            if (!m.value.hasMethodAnnotation(JwtAuth::class.java)) {
-                UriHandler.uris.add(m.key.patternsCondition.patterns.first()!!)
-            }
-        }
+        UriHandler.uris = methods.filter { !it.value.hasMethodAnnotation(JwtAuth::class.java) }
+                .map { it.key.patternsCondition.patterns.first()!! }
     }
 }
 
 object UriHandler {
-    var uris: ArrayList<String> = ArrayList()
+    lateinit var uris: List<String>
 }
